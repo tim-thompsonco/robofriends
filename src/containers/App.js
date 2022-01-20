@@ -23,13 +23,13 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const App = ({ searchField, onSearchChange, robots, isPending }) => {
+const App = ({ searchField, onSearchChange, robots, isPending, onRequestRobots }) => {
     const filteredRobots = robots.filter(robot =>{
       return robot.name.toLowerCase().includes(searchField.toLowerCase());
     })
 
     useEffect(() => {
-        this.props.onRequestRobots();
+        onRequestRobots();
     }, [])
 
     return isPending ?
