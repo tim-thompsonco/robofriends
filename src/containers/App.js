@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
@@ -23,16 +23,14 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onRequestRobots();
-  }
-
-  render() {
-    const { searchField, onSearchChange, robots, isPending } = this.props;
+const App = ({ searchField, onSearchChange, robots, isPending }) => {
     const filteredRobots = robots.filter(robot =>{
       return robot.name.toLowerCase().includes(searchField.toLowerCase());
     })
+
+    useEffect(() => {
+        this.props.onRequestRobots();
+    }, [])
 
     return isPending ?
       <h1>Loading</h1> :
@@ -45,7 +43,6 @@ class App extends Component {
           </Scroll>
         </div>
       );
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
